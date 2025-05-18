@@ -19,7 +19,7 @@ class MarcaController extends Controller
     {
         //$marcas = Marca::all();
         $marcas = $this->marca->all();
-        return $marcas;
+        return response()->json($marcas, 200);
     }
 
     /**
@@ -40,9 +40,12 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
+    
+        $request->validate($this->marca->rules(), $this->marca->feedback());
+
         //$marca = Marca::create($request->all());
         $marca = $this->marca->create($request->all());
-        return $marca;
+        return  response()->json($marca, 201);
     }
 
     /**
@@ -56,9 +59,9 @@ class MarcaController extends Controller
         $marca = $this->marca->find($id);
 
         if($marca===null){
-            return ['erro' => 'Recurso pesquisado não existe'];
+            return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         }
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     /**
@@ -85,8 +88,14 @@ class MarcaController extends Controller
         // echo '<hr>';
         // print_r($marca->getAttributes());
         $marca = $this->marca->find($id); 
+
+        if ($marca === null){
+            return response()->json(['erro' => 'Não foi possivel atualizar. O recurso solicitado não existe'], 404);
+        }
+
+        $request->validate($marca->rules(), $marca->feedback());
         $marca->update($request->all());
-        return $marca;
+        return response()->json($marca, 200);
     }
 
     /**
@@ -98,7 +107,10 @@ class MarcaController extends Controller
     public function destroy($id)
     {   
         $marca = $this->marca->find($id); 
+        if ($marca === null){
+            return  response()->json(['erro'=>'Não foi possivel remover. O recurso solicitado não existe'], 404);
+        }
         $marca->delete();
-        return ['msg' => 'A marca foi removida com sucesso!'];
+        return response()->json(['msg' => 'A marca foi removida com sucesso!'], 200);
     }
 }
