@@ -45,11 +45,13 @@ class MarcaController extends Controller
 
         //$marca = Marca::create($request->all());
         //dd($request->nome);
-        $image = $request->imagem;
-        $image->store('imagens','public');
-        dd('Arquivo foi Enviado');
+        $image = $request->file('imagem');
+        $imagem_urn = $image->store('imagens','public');
 
-        //$marca = $this->marca->create($request->all());
+        $marca = $this->marca->create([
+            'nome' => $request->nome,
+            'imagem' => $imagem_urn 
+        ]);
         return  response()->json($marca, 201);
     }
 
