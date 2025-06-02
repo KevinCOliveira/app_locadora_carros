@@ -122,13 +122,17 @@ class MarcaController extends Controller
             Storage::disk('public')->delete($marca->imagem);
         }
 
+        
         $imagem = $request->file('imagem');
         $imagem_urn = $imagem->store('imagens','public');
 
-        $marca->update([
-            'nome' => $request->nome,
-            'imagem' => $imagem_urn
-        ]);
+        $marca->fill($request->all()); //pega parametros do array e sobreescreve atributos do objeto
+        $marca->imagem = $imagem_urn;
+        // $marca->update([
+        //     'nome' => $request->nome,
+        //     'imagem' => $imagem_urn
+        // ]);
+        $marca->save();
 
         return response()->json($marca, 200);
     }
