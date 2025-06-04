@@ -37,7 +37,7 @@ class ModeloController extends Controller
 
         if($request->has('atributos')){
             $atributos = $request->atributos;
-            $modelos = $modelos->selectRAW($atributos)->get();
+            $modelos = $modelos->selectRaw($atributos)->get();
         }else{
            $modelos = $modelos->get();
 
