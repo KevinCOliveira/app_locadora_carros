@@ -25,7 +25,6 @@ class MarcaController extends Controller
             $atributos_modelos = "modelos:id,$request->atributos_modelos";
             $marcaRepository->selectAtributosRegistrosRelacionados($atributos_modelos); 
         } else {
-            $marcas = $this->marca->with('modelos');
             $marcaRepository->selectAtributosRegistrosRelacionados('modelos');
         }
 
