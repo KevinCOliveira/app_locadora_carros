@@ -9,7 +9,7 @@ class Modelo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['marca_id','nome','imagem', 'numero_portas','lugares', 'air_bag', 'abs'];
+    protected $fillable = ['marca_id','nome','imagem','numero_portas','lugares','air_bag','abs'];
 
     public function rules(){
         return [

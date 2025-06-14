@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carro;
-use App\Http\Requests\StoreCarroRequest;
-use App\Http\Requests\UpdateCarroRequest;
+use Illuminate\Http\Request;
+
+use App\Repositories\CarroRepository;
 
 class CarroController extends Controller
 {
@@ -15,8 +16,8 @@ class CarroController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function index()
+     */ 
+    public function index(Request $request)
     {
         $carroRepository = new CarroRepository($this->carro);
 
@@ -61,7 +62,7 @@ class CarroController extends Controller
         $carro = $this->carro->create([
             'modelo_id' => $request->modelo_id,
             'placa' => $request->placa,
-            'disponivel' => $disponivel,
+            'disponivel' => $request->disponivel,
             'km' => $request->km
         ]);
         return  response()->json($carro, 201);
@@ -73,14 +74,14 @@ class CarroController extends Controller
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function show(Carro $carro)
+    public function show($id)
     {
-        $modelo = $this->modelo->with('marca')->find($id);
+        $carro = $this->carro->with('modelo')->find($id);
 
-        if($modelo===null){
+        if($carro===null){
             return response()->json(['erro' => 'Recurso pesquisado não existe'], 404);
         }
-        return response()->json($modelo, 200);
+        return response()->json($carro, 200);
     }
 
     /**
@@ -97,13 +98,41 @@ class CarroController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCarroRequest  $request
+     * @param  Request  $request
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCarroRequest $request, Carro $carro)
+    public function update(Request $request, $id)
     {
-        //
+        {
+            $carro = $this->carro->find($id); 
+    
+            if ($carro === null){
+                return response()->json(['erro' => 'Não foi possivel atualizar. O recurso solicitado não existe'], 404);
+            }
+    
+            if($request->method() === 'PATCH'){
+                
+                $regrasDinamicas=array();
+    
+                foreach($carro->rules() as $input => $regra){
+    
+                    if(array_key_exists($input, $request->all())){
+                        $regrasDinamicas[$input] = $regra;
+                    }  
+                }
+                $request->validate($regrasDinamicas);  
+            }
+            else
+            {
+                $request->validate($carro->rules());
+            }
+    
+            $carro->fill($request->all());
+            $carro->save(); 
+    
+            return response()->json($carro, 200);
+        }
     }
 
     /**
@@ -112,8 +141,14 @@ class CarroController extends Controller
      * @param  \App\Models\Carro  $carro
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Carro $carro)
+    public function destroy($id)
     {
-        //
+        $carro = $this->carro->find($id);
+        if ($carro === null){
+            return response()->json(['erro'=>'Não foi possivel remover. O recurso solicitado não existe'], 404);
+        }
+
+        $carro->delete();
+        return response()->json(['msg' => 'Registro foi removido com sucesso'],200);
     }
 }
