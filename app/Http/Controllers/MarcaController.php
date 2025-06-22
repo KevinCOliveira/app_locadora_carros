@@ -117,7 +117,7 @@ class MarcaController extends Controller
         $marca = $this->marca->find($id); 
 
         if ($marca === null){
-            return response()->json(['erro' => 'Não foi possivel atualizar. O recurso solicitado não existe'], 404);
+            return response()->json(['erro' => '    '], 404);
         }
 
         if($request->method() === 'PATCH'){

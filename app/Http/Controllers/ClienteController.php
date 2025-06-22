@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use Illuminate\Http\Request;
+
 use App\Repositories\ClienteRepository;
 
 class ClienteController extends Controller
@@ -43,7 +44,7 @@ class ClienteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreClienteRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -103,8 +104,8 @@ class ClienteController extends Controller
                 if (array_key_exists($input,$request->all())){
                     $regrasdinamicas[$input] = $regra;
                 }
-                $request->validate($regrasdinamicas);
             }
+            $request->validate($regrasdinamicas);
         }
 
         else {
@@ -133,6 +134,6 @@ class ClienteController extends Controller
         }
 
         $cliente->delete();
-        return response()->json(['msg'=>'Registro foi removido com sucesso']);
+        return response()->json(['msg'=>'Registro foi removido com sucesso'],200);
     }
 }
