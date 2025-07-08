@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Login {Component Vue}</div>
+                <div class="card-header">Login (Component Vue)</div>
 
                 <div class="card-body">
                     <form method="POST" action="">
@@ -46,7 +46,7 @@
 
             
                                     <a class="btn btn-link" href="#">
-                                        
+                                        Esqueci a senha
                                     </a>
                                
                             </div>
@@ -60,5 +60,7 @@
 </template>
 
 <script>
-  
+    export default{
+        props:['xyz','abc'] //data
+    }
 </script>
