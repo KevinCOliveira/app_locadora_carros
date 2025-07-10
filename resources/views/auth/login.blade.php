@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <login-component xyz="isso é um teste" abc="esse é outro teste"></login-component>
+    <login-component csrf_token="{{@csrf_token()}}"></login-component>
 @endsection
