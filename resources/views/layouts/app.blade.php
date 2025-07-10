@@ -48,7 +48,7 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                               <a class="dropdown-item" href="#">Carros</a>
                               <hr class="dropdown-divider">
-                              <a class="dropdown-item" href="#">Marcas</a>
+                              <a class="dropdown-item" href="{{route ('marcas')}}">Marcas</a>
                               <a class="dropdown-item" href="#">Modelos</a>
                             </div>
                         </li>
