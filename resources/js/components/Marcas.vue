@@ -83,7 +83,8 @@
                 let config = {
                     headers:{
                         'Content-Type' : 'multipart/form-data',
-                        'Accept' : 'application/Json'
+                        'Accept' : 'application/Json',
+                        'Authorization' : 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTc1NDA2NzUxNiwiZXhwIjoxNzU0MDc0NzE2LCJuYmYiOjE3NTQwNjc1MTYsImp0aSI6ImpBYlZ5ekdFY0gzb1NuUWsiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.6KSDQMCZRgBlsrzHaI--USemFHB5aFfvzmHzhufj6Hw'
                     }
 
                 }
