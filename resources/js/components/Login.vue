@@ -85,7 +85,7 @@
              .then(data => {
                     console.log()
                     if(data.token){
-                        document.cookie = 'token='+data.token+'SameSite=Lax'
+                        document.cookie = 'token='+data.token+';SameSite=Lax'
                     }
                    //dar sequencia no envio do form de autenticação por sessao
                    e.target.submit() 
