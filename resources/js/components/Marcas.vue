@@ -115,7 +115,7 @@
                     .then(response => {
                         this.transacaoStatus = 'adicionado'
                         this.transacaoDetalhes = {
-                            mensagem: 'ID do registro' + response.data.id
+                            mensagem: 'ID do registro: ' + response.data.id
                         }
                         console.log(response)
                     })
@@ -123,7 +123,7 @@
                         this.transacaoStatus = 'erro'
                         this.transacaoDetalhes = {
                             mensagem: errors.response.data.message,
-                            dados:
+                            dados: errors.response.data.errors
                         }
                         console.log(errors)
                     })
