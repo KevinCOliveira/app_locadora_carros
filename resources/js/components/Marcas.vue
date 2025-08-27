@@ -61,7 +61,7 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
-    
+        <button type="button" @click="carregarlista()">Teste</button>
     </div>
 </template>
 
@@ -88,10 +88,20 @@
                 nomeMarca:'',
                 arquivoImagem:[],
                 transacaoStatus:'',
-                transacaoDetalhes:{}
+                transacaoDetalhes:{},
+                marcas:[]
             }
         },
         methods: {
+            carregarlista(){
+                axios.get(this.urlBase)
+                    .then(response=>{
+                        console.log(response.data)
+                    })
+                    .catch(errors=>{
+                        console.log(errors)
+                    })
+            },
             carregarImagem(e){
                  this.arquivoImagem = e.target.files
             },
