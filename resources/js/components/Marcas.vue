@@ -30,7 +30,7 @@
                 <!-- Inicio do card de listagem -->
                     <card-component titulo="Relação de marcas">
                         <template v-slot:conteudo>
-                            <table-component></table-component>
+                            <table-component :dados="marcas"></table-component>
                         </template>
                         <template v-slot:rodape>
                             <button type="submit" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
@@ -61,7 +61,6 @@
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
         </modal-component>
-        <button type="button" @click="carregarlista()">Teste</button>
     </div>
 </template>
 
@@ -93,10 +92,17 @@
             }
         },
         methods: {
-            carregarlista(){
-                axios.get(this.urlBase)
+            carregarLista(){
+                 let config = {
+                    headers:{
+                        'Accept' : 'application/Json',
+                        'Authorization' : this.token
+                            }
+                 }
+                axios.get(this.urlBase,config)
                     .then(response=>{
-                        console.log(response.data)
+                        this.marcas = response.data
+                        //console.log(this.marcas)
                     })
                     .catch(errors=>{
                         console.log(errors)
@@ -138,6 +144,9 @@
                         console.log(errors)
                     })
             }
+        },
+        mounted() {
+            this.carregarLista()
         }
     }
  
