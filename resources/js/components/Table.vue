@@ -1,20 +1,26 @@
 <template>
     <div>
-        {{ titulos }}
         <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                            <th scope="col" v-for>#</th>
-                                            <th scope="col">First</th>
-                                            <th scope="col">Last</th>
+                                            <th scope="col" v-for="t, key in titulos" :key="key" >{{t.titulo}}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr v-for="m in dados" :key="m.id">
-                                            <th scope="row">{{ m.id }}</th>
-                                            <td>{{ m.nome }}</td>
-                                            <td><img :src="'/storage/'+m.imagem" width="30" heigth="30"></td>                        
+                                            <tr v-for="obj in dadosFiltrados" :key="chave">
+                                                <td>{{ objeto }}</td>
                                             </tr>
+                                            
+                                            <!-- <tr v-for="obj in dados" :key="obj.id">
+                                                <td v-if="titulos.includes(chave)" v-for="valor, chave in obj" :key="chave">
+                                                    <span v-if="chave == 'imagem' "> 
+                                                        <img :src="'/storage/'+valor" width="30" height="30">
+                                                    </span>
+                                                    <span v-else>
+                                                        {{ valor }}
+                                                    </span>
+                                                </td>                   
+                                            </tr> -->
                                         </tbody>
         </table>
     </div>
@@ -22,6 +28,26 @@
 
 <script>
     export default {
-        props:['dados','titulos']
+        props:['dados','titulos'],
+        computed: {
+            dadosFiltrados(){
+                let campos = Object.keys(this.titulos)
+                //console.log(this.titulos)
+
+                //console.log(this.dados)
+
+                this.dados.map((item,chave) => {
+                   // console.log(chave, item)
+                    let itemFiltrado = {}
+                    campos.forEach(campo => {
+                        //console.log(campo)
+                        itemFiltrado[campo] = item[campo]
+                        console.log(chave, item, campo)
+                    })
+                })
+                return  '' //retorno array de objetos para ser representado
+            }
+        
+            }
     }
 </script> 
