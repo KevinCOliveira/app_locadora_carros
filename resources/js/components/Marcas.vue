@@ -31,12 +31,12 @@
                     <card-component titulo="Relação de marcas">
                         <template v-slot:conteudo>
                             <table-component 
-                            :dados="marcas"
+                            :dados="marcas.data"
                             :titulos="{
-                                id: {titulo: 'ID', tipo:'text'},
-                                nome: {titulo: 'Nome', tipo:'text'},
+                                id: {titulo: 'ID', tipo:'texto'},
+                                nome: {titulo: 'Nome', tipo:'texto'},
                                 imagem: {titulo: 'Imagem', tipo:'imagem'},
-                                create_at: {titulo: 'Data criação', tipo:'data'}
+                                created_at: {titulo: 'Data criação', tipo:'data'}
                             }">
                         </table-component>
                         </template>
@@ -96,7 +96,7 @@
                 arquivoImagem:[],
                 transacaoStatus:'',
                 transacaoDetalhes:{},
-                marcas:[]
+                marcas:{data:[]}
             }
         },
         methods: {
@@ -110,7 +110,7 @@
                 axios.get(this.urlBase,config)
                     .then(response=>{
                         this.marcas = response.data
-                        //console.log(this.marcas)
+                        console.log(this.marcas)
                     })
                     .catch(errors=>{
                         console.log(errors)
