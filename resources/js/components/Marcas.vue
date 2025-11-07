@@ -41,7 +41,18 @@
                         </table-component>
                         </template>
                         <template v-slot:rodape>
-                            <button type="submit" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
+                            <div class="row">
+                                <div class="col-10">
+                                    <paginate-component>
+                                        <li v-for="l, key in marcas.links" :key="key" @click="paginacao(l)" :class="l.active ? 'page-item active' : 'page-item'">
+                                            <a class="page-link" v-html="l.label" ></a>
+                                        </li>
+                                    </paginate-component>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalMarca">Adicionar</button>
+                                </div>
+                            </div>
                         </template>
                     </card-component>
             </div>
@@ -151,6 +162,12 @@
                         }
                         console.log(errors)
                     })
+            },
+            paginacao(l){
+                if(l.url){
+                    this.urlBase=l.url // ajustando a url de consulta com o parâmetro de página
+                    this.carregarLista() // requisitando novamente os dados para nossa API
+                }
             }
         },
         mounted() {
