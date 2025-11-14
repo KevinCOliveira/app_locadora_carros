@@ -10,18 +10,18 @@
                                 <div class="col mb-3">
 
                                     <input-container-component titulo="ID" id="input" id-help="idHelp" texto-ajuda="Opcional. informe o ID da marca">
-                                        <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID">
+                                        <input type="number" class="form-control" id="inputId" aria-describedby="idHelp" placeholder="ID" v-model="busca.id">
                                     </input-container-component>
                                 </div> 
                                 <div class="col mb-3">
                                     <input-container-component titulo="Nome da marca" id="inputNome" id-help="nomeHelp" texto-ajuda="Opcional. informe o Nome da marca">
-                                        <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da marca">
+                                        <input type="text" class="form-control" id="inputNome" aria-describedby="nomeHelp" placeholder="Nome da marca" v-model="busca.nome">
                                     </input-container-component>
                                 </div>  
                             </div>
                         </template>
                         <template v-slot:rodape>
-                            <button type="submit" class="btn btn-primary btn-sm float-right">Pesquisar</button>
+                            <button type="submit" class="btn btn-primary btn-sm float-right" @click="pesquisar()">Pesquisar</button>
                         </template>
                         
                     </card-component>
@@ -107,10 +107,27 @@
                 arquivoImagem:[],
                 transacaoStatus:'',
                 transacaoDetalhes:{},
-                marcas:{data:[]}
+                marcas:{data:[]},
+                busca:{id:'', nome:''}
             }
         },
         methods: {
+            pesquisar(){
+                let filtro = ''
+
+                for (let chave in this.busca){
+                     //console.log(chave, this.busca[chave])
+
+                    if (this.busca[chave]){
+
+                        if (filtro !=''){
+                            filtro+=";"
+                        }
+                         filtro += chave+':like:'+this.busca[chave]
+                    } 
+                }   
+                console.log(filtro)
+            },
             carregarLista(){
                  let config = {
                     headers:{
