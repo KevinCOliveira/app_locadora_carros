@@ -32,6 +32,11 @@
                         <template v-slot:conteudo>
                             <table-component 
                             :dados="marcas.data"
+
+                            :visualizar="true"
+                            :atualizar="true"
+                            :remover="true"
+                            
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'texto'},
                                 nome: {titulo: 'Nome', tipo:'texto'},
@@ -57,6 +62,8 @@
                     </card-component>
             </div>
         </div>
+
+     <!-- inicio modal adicionar marca -->    
         <modal-component id="modalMarca" titulo="Adicionar marca"> 
 
             <template v-slot:alertas>
@@ -79,7 +86,31 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary" @click="salvar()">Salvar</button>
             </template>
+
         </modal-component>
+        <!--fim do modal adicionar marca -->
+        
+        <!--Inicio do modal visualizar marca -->
+        <modal-component id="modalMarcaVisualizar" titulo="Visualizar marca"> 
+
+            <template v-slot:alertas>
+            </template>  
+
+            <template v-slot:conteudo>
+                <div class="form-group">
+                Teste
+                </div>
+            </template>    
+
+            <template v-slot:rodape> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </template>
+        
+        </modal-component>
+        <!--fim do modal visualizar marca -->
+
+
+
     </div>
 </template>
 
