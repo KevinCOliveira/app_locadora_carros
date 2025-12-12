@@ -15,7 +15,7 @@ Vue.use (Vuex)
 
 const store = new Vuex.Store({
     state:{
-        teste:'texto de teste do Vuex'
+        item:{}
     }
 })
 
