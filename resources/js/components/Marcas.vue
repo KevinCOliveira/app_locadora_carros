@@ -144,6 +144,7 @@
 
         <template v-slot:rodape> 
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-danger" @click="remover()">Remover</button>
         </template>
 
         </modal-component>
@@ -185,6 +186,37 @@
             }
         },
         methods: {
+
+            remover(){
+               let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
+
+               if (!confirmacao) {return false;}
+
+               let formData= new FormData();
+               formData.append('_method', 'delete')
+
+               let config = {
+                headers: {
+                    'Accept' : 'application/json',
+                    'Authorization' : this.token
+                    }
+               }
+               
+               let url = this.urlBase + '/' + this.$store.state.item.id
+
+               console.log(url)
+
+               axios.post(url,formData,config)
+                .then(response => {
+                    console.log('Registro removido com sucesso', response)
+                    this.carregarLista()
+                }) 
+                .catch(errors => {
+                    console.log('Houve um erro na tentativa de remoção do registro', errors.response)
+                })
+
+            },
+
             pesquisar(){
                 let filtro = ''
 
@@ -210,7 +242,7 @@
             carregarLista(){
                  let config = {
                     headers:{
-                        'Accept' : 'application/Json',
+                        'Accept' : 'application/json',
                         'Authorization' : this.token
                             }
                  }
