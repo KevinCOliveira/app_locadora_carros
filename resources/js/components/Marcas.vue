@@ -34,9 +34,8 @@
                             :dados="marcas.data"
 
                             :visualizar="{visivel:true, dataToggle:'modal', dataTarget:'#modalMarcaVisualizar'}"
-                            :atualizar="true"
+                            :atualizar="{visivel:true, dataToggle:'modal', dataTarget:'#modalMarcaAtualizar'}"
                             :remover="{visivel:true, dataToggle:'modal', dataTarget:'#modalMarcaRemover'}"
-                            
                             :titulos="{
                                 id: {titulo: 'ID', tipo:'texto'},
                                 nome: {titulo: 'Nome', tipo:'texto'},
@@ -154,6 +153,34 @@
         </modal-component>
         <!--fim do modal Remover marca -->
 
+         <!-- inicio modal atualizar marca -->    
+         <modal-component id="modalMarcaAtualizar" titulo="Atualizar marca"> 
+
+            <template v-slot:alertas>
+                <alert-component tipo="success" :detalhes="transacaoDetalhes" titulo="Cadastro realizado com sucesso"  v-if="transacaoStatus == 'adicionado' "></alert-component>
+                <alert-component tipo="danger" :detalhes="transacaoDetalhes" titulo="Erro ao tentar cadastrar a marca" v-if="transacaoStatus == 'erro' "></alert-component>
+            </template>    
+            <template v-slot:conteudo>
+                <div class="form-group">
+                    <input-container-component titulo="Nome da marca" id="atualizarNome" id-help="atualizarNomehelp" texto-ajuda="Informe o Nome da marca">
+                                                <input type="text" class="form-control" id="atualizarNome" aria-describedby="atualizarNomehelp" placeholder="Nome da marca" v-model="nomeMarca">
+                    </input-container-component>
+                </div>
+                <div class="form-group">
+                    <input-container-component titulo="Imagem" id="atualizarImagem" id-help="atualizarImagemHelp" texto-ajuda="Selecione uma imagem no formato PNG">
+                                                <input type="file" class="form-control-file" id="atualizarImagem" aria-describedby="atualizarImagemHelp" placeholder="Selecione uma imagem" @change="carregarImagem($event)">
+                    </input-container-component>
+                </div>
+            </template>
+            <template v-slot:rodape> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" @click="atualizar()">Atualizar</button>
+            </template>
+
+        </modal-component>
+        <!--fim do modal atualizar marca -->
+
+
 
 
     </div>
@@ -190,6 +217,9 @@
             }
         },
         methods: {
+            atualizar(){
+                console.log('cheguei aqui')
+            },
 
             remover(){
                let confirmacao = confirm('Tem certeza que deseja remover esse registro?')
